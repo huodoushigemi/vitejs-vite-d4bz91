@@ -11,12 +11,13 @@
 import { ref, reactive } from 'vue'
 import FormRender from './form-render.vue'
 
-document.querySelector('[data-loading]').remove()
+document.querySelector('[data-loading]')?.remove()
 
 const formData = reactive({
   name: '',
   sex: '',
   age: 18,
+  intro: '',
   desc: ''
 })
 
@@ -31,25 +32,27 @@ const required = { required: true, message: '必填' }
 // 表单
 const items = [
   {
-    wrap: { label: '姓名', prop: 'name' },
-    rules: [required, { max: 10, message: '不能超过10个字符' }],
-    options: { clearable: true }
+    wrap: ['姓名', 'name', { rules: [required, { max: 10, message: '不能超过10个字符' }] }],
+    el: { clearable: true }
   },
   {
-    wrap: { label: '性别', prop: 'sex', rules: required },
+    wrap: ['性别', 'sex', { rules: required }],
     type: 'select',
-    options: { options: sexs, clearable: true }
+    el: { options: sexs, clearable: true }
   },
   {
-    wrap: { label: '年龄', prop: 'age' },
-    hidden: () => formData.sex != '女',
-    type: 'slider',
-    options: { onChange: () => (formData.desc = [formData.name, formData.sex, formData.age].join(' | ')) }
+    wrap: ['年龄', 'age'],
+    hidden: () => formData.sex == '男',
+    type: 'slider'
   },
   {
-    wrap: { label: '介绍', prop: 'desc' },
+    wrap: ['介绍', 'intro'],
     rules: () => ({ required: formData.sex == '男', message: '必填' }),
-    options: { type: 'textarea', autosize: true, clearable: true }
+    el: { type: 'textarea', autosize: true, clearable: true }
+  },
+  {
+    wrap: ['描述', 'desc'],
+    el: { value: `{'我叫' + data.name + '，今年' + data.age + '岁'}` }
   }
 ]
 
