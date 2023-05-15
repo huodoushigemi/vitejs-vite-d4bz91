@@ -32,13 +32,12 @@ const required = { required: true, message: '必填' }
 // 表单
 const items = [
   {
-    wrap: ['姓名', 'name', { rules: [required, { max: 10, message: '不能超过10个字符' }] }],
-    el: { clearable: true }
+    wrap: ['姓名', 'name', { rules: [required, { max: 10, message: '不能超过10个字符' }] }]
   },
   {
     wrap: ['性别', 'sex', { rules: required }],
     type: 'select',
-    el: { options: sexs, clearable: true }
+    el: { options: sexs }
   },
   {
     wrap: ['年龄', 'age'],
@@ -48,7 +47,7 @@ const items = [
   {
     wrap: ['介绍', 'intro'],
     rules: () => ({ required: formData.sex == '男', message: '必填' }),
-    el: { type: 'textarea', autosize: true, clearable: true }
+    el: { type: 'textarea', autosize: true }
   },
   {
     wrap: ['描述', 'desc'],
